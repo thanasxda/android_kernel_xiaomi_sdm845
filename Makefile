@@ -354,6 +354,8 @@ CC		= $(CROSS_COMPILE)gcc
 LDGOLD		= $(CROSS_COMPILE)ld.gold
 LDLLD		= ld.lld
 CC		= $(CROSS_COMPILE)gcc
+LDGOLD		= $(CROSS_COMPILE)ld.gold
+LDLLD		= ld.lld
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
@@ -684,7 +686,7 @@ KBUILD_LDFLAGS	+= -O3
 endif
 endif
 ifdef CONFIG_LTO_CLANG
-# use GNU gold with LLVMgold or LLD for LTO linking, and LD for vmlinux_link
+# use GNU gold and LD for vmlinux_link, or LLD for LTO linking
 ifeq ($(ld-name),gold)
 LDFLAGS		+= -plugin LLVMgold.so
 LDFLAGS		+= --plugin-opt=O3
