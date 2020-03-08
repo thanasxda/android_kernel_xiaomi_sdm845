@@ -850,7 +850,7 @@ KBUILD_CFLAGS	+= -O3 -mtune=cortex-a75.cortex-a55 -mcpu=cortex-a75.cortex-a55+cr
 #KBUILD_CFLAGS	+= -fno-gcse  
 #KBUILD_CFLAGS	+= -ftracer
 LDFLAGS		+= -O3 
-LDFLAGS += -fuse-ld=gold
+#LDFLAGS += -fuse-ld=gold
 KBUILD_CFLAGS	+= $(call cc-option,-mabi=lp64)
 KBUILD_AFLAGS	+= $(call cc-option,-mabi=lp64)
 #LDFLAGS_vmlinux	+= $(call ld-option, --gc-sections,)
@@ -880,7 +880,7 @@ KBUILD_CFLAGS	+= -O3 -march=armv8.3-a+crc+crypto+fp16+simd+sve -ffast-math -mcpu
 
 
 #KBUILD_CFLAGS	+= -fopenmp 
-#KBUILD_CFLAGS	+= -mllvm -polly \
+KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-omp-backend=LLVM \
 		   -mllvm -polly-scheduling=dynamic \
 		   -mllvm -polly-scheduling-chunksize=1 \
