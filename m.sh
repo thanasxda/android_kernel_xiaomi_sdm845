@@ -27,7 +27,7 @@ TC=~/TOOLCHAIN
 ###
 GCC32=$TC/arm-linux-gnueabi/bin 
 GCC64=$TC/aarch64-linux-gnu/bin
-CLANG=/usr/bin/clang
+CLANG=$TC/clang/bin
 ###
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )
@@ -57,7 +57,7 @@ export ARCH=arm64 && export SUBARCH=arm64 $DEFCONFIG
 export CROSS_COMPILE=aarch64-linux-gnu-
 export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
-#export CLANG_TRIPLE=aarch64-linux-gnu-
+export CLANG_TRIPLE=aarch64-linux-gnu-
 export LD_LIBRARY_PATH="$CLANG/../lib:$CLANG/../lib64:$LD_LIBRARY_PATH"
 export PATH="$CLANG:$PATH"
 
