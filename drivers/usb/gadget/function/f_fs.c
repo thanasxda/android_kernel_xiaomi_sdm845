@@ -1303,6 +1303,8 @@ static int ffs_aio_cancel(struct kiocb *kiocb)
 
 	spin_lock_irqsave(&epfile->ffs->eps_lock, flags);
 
+	spin_lock_irqsave(&epfile->ffs->eps_lock, flags);
+
 	if (likely(io_data && io_data->ep && io_data->req))
 		value = usb_ep_dequeue(io_data->ep, io_data->req);
 	else
