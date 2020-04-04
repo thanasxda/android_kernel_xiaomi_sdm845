@@ -883,7 +883,7 @@ KBUILD_CFLAGS	+= -O3 -march=armv8.3-a+crc+crypto+fp16+simd+sve -ffast-math -mcpu
 
 
 #KBUILD_CFLAGS	+= -fopenmp 
-#KBUILD_CFLAGS	+= -mllvm -polly \
+KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-omp-backend=LLVM \
 		   -mllvm -polly-scheduling=dynamic \
 		   -mllvm -polly-scheduling-chunksize=1 \
