@@ -57,7 +57,7 @@ export ARCH=arm64 && export SUBARCH=arm64 $DEFCONFIG
 export CROSS_COMPILE=aarch64-linux-gnu-
 export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
-export CLANG_TRIPLE=aarch64-linux-gnu-
+#export CLANG_TRIPLE=aarch64-linux-gnu-
 export LD_LIBRARY_PATH="$CLANG/../lib:$CLANG/../lib64:$LD_LIBRARY_PATH"
 export PATH="$CLANG:$PATH"
 
