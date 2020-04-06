@@ -918,6 +918,9 @@ ifdef CONFIG_CC_WERROR
 #KBUILD_CFLAGS	+= -Werror
 endif
 
+# Add EXP New Pass Manager for clang
+KBUILD_CFLAGS	+= $(call cc-option,-fexperimental-new-pass-manager)
+
 # Tell gcc to never replace conditional load with a non-conditional one
 KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
 
