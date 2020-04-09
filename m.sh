@@ -23,11 +23,11 @@ MLX=~/GIT/android_kernel_xiaomi_sdm845
 AK=$MLX/AnyKernel3
 OUT=$MLX/out/arch/arm64/boot
 KERNEL=~/Desktop/MLX
-TC=~/TOOLCHAIN
+TC=/usr/
 ###
 GCC32=$TC/arm-linux-gnueabi/bin 
 GCC64=$TC/aarch64-linux-gnu/bin
-CLANG=$TC/clang/bin
+CLANG=/bin/
 ###
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )
