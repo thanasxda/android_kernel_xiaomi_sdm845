@@ -653,16 +653,6 @@ endif
 # Defaults to vmlinux, but the arch makefile usually adds further targets
 all: vmlinux
 
-# Make toolchain changes before including arch/$(SRCARCH)/Makefile to ensure
-# ar/cc/ld-* macros return correct values.
-ifdef CONFIG_LD_GOLD
-LDFINAL_vmlinux := $(LD)
-LD		:= $(LDGOLD)
-endif
-ifdef CONFIG_LD_LLD
-LD		:= $(LDLLD)
-endif
-
 KBUILD_CFLAGS	+= $(call cc-option,-fno-PIE)
 KBUILD_AFLAGS	+= $(call cc-option,-fno-PIE)
 CFLAGS_GCOV	:= -fprofile-arcs -ftest-coverage \
@@ -690,14 +680,14 @@ endif
 endif
 ifdef CONFIG_LTO_CLANG
 # use GNU gold and LD for vmlinux_link, or LLD for LTO linking
-ifeq ($(ld-name),gold)
 LDFLAGS		+= -plugin LLVMgold.so
 LDFLAGS		+= --plugin-opt=O3
-endif
+
 LDFLAGS		+= -plugin-opt=-function-sections
 LDFLAGS		+= -plugin-opt=-data-sections
 LDFLAGS		+= -plugin-opt=new-pass-manager
 LDFLAGS		+= -plugin-opt=mcpu=kryo
+
 # use llvm-ar for building symbol tables from IR files, and llvm-dis instead
 # of objdump for processing symbol versions and exports
 LLVM_AR		:= llvm-ar
@@ -719,9 +709,8 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning,frame-address,)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, format-truncation)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
-KBUILD_CFLAGS	+= $(call cc-disable-warning, attribute-alias)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
-KBUILD_CFLAGS	+= $(call cc-disable-warning, psabi)
+KBUILD_CFLAGS	+= $(call cc-disable-warning, attribute-alias)
 
 ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
 KBUILD_CFLAGS	+= $(call cc-option,-ffunction-sections,)
@@ -746,6 +735,7 @@ lto-clang-flags	:= -flto
 LDFLAGS		+= -plugin-opt=-safestack-use-pointer-address
 endif
 lto-clang-flags += -fvisibility=hidden
+lto-clang-flags	+= -O3
 
 # allow disabling only clang LTO where needed
 DISABLE_LTO_CLANG := -fno-lto -fvisibility=default
@@ -819,8 +809,7 @@ KBUILD_CFLAGS   += -O3
 endif
 
 ifdef CONFIG_LTO_CLANG
- if we use LLVMgold, pass extra flags to ld.gold
-LDFLAGS		+= -plugin-opt=-safestack-use-pointer-address
+#LDFLAGS		+= -plugin-opt=-safestack-use-pointer-address
 endif
 
 ifdef CONFIG_SAFESTACK_COLORING
@@ -1380,11 +1369,11 @@ prepare-compiler-check: FORCE
 # Make sure we're using a supported toolchain with LTO_CLANG
 ifdef CONFIG_LTO_CLANG
   ifneq ($(call clang-ifversion, -ge, 0500, y), y)
-	@echo Cannot use CONFIG_LTO_CLANG: requires clang 5.0 or later >&2 
+	@echo Cannot use CONFIG_LTO_CLANG: requires clang 5.0 or later >&2 && exit 1
   endif
   ifneq ($(ld-name), lld)
     ifneq ($(call gold-ifversion, -ge, 112000000, y), y)
-	@echo Cannot use CONFIG_LTO_CLANG: requires LLD or GNU gold 1.12 or later >&2 
+	@echo Cannot use CONFIG_LTO_CLANG: requires LLD or GNU gold 1.12 or later >&2 && exit 1
     endif
   endif
 endif
@@ -1392,31 +1381,26 @@ endif
 ifdef lto-flags
   ifeq ($(call cc-option, $(lto-flags)),)
 	@echo Cannot use CONFIG_LTO: $(lto-flags) not supported by compiler \
-		>&2 
+		>&2 && exit 1
   endif
 endif
 # Make sure compiler supports requested stack protector flag.
 ifdef stackp-name
   ifeq ($(call cc-option, $(stackp-flag)),)
 	@echo Cannot use CONFIG_CC_STACKPROTECTOR_$(stackp-name): \
-		  $(stackp-flag) not supported by compiler >&2 
+		  $(stackp-flag) not supported by compiler >&2 && exit 1
   endif
 endif
 # Make sure compiler does not have buggy stack-protector support.
 ifdef stackp-check
   ifneq ($(shell $(CONFIG_SHELL) $(stackp-check) $(CC) $(KBUILD_CPPFLAGS) $(biarch)),y)
 	@echo Cannot use CONFIG_CC_STACKPROTECTOR_$(stackp-name): \
-                  $(stackp-flag) available but compiler is broken >&2 
+                  $(stackp-flag) available but compiler is broken >&2 && exit 1
   endif
 endif
 ifdef cfi-flags
   ifeq ($(call cc-option, $(cfi-flags)),)
-	@echo Cannot use CONFIG_CFI: $(cfi-flags) not supported by compiler >&2 
-  endif
-endif
-ifdef scs-flags
-  ifeq ($(call cc-option, $(scs-flags)),)
-	@echo Cannot use CONFIG_SHADOW_CALL_STACK: $(scs-flags) not supported by compiler >&2 
+	@echo Cannot use CONFIG_CFI: $(cfi-flags) not supported by compiler >&2 && exit 1
   endif
 endif
 	@:
