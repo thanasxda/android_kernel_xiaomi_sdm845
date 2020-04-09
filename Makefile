@@ -835,7 +835,7 @@ endif
 #THANAS
 
 # Optimization for gcc sdm845
-KBUILD_CFLAGS	+= -O3 -mtune=cortex-a75.cortex-a55 -mcpu=cortex-a75.cortex-a55+crc+crypto+fp16+simd+sve \
+KBUILD_CFLAGS	+= -O3 -mtune=cortex-a75.cortex-a55 -ffast-math -mcpu=cortex-a75.cortex-a55+crc+crypto+fp16+simd+sve \
 -fomit-frame-pointer -pipe \
 -funroll-loops \
 -fforce-addr -ftree-vectorize  
