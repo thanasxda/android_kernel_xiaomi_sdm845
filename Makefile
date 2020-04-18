@@ -835,18 +835,21 @@ endif
 #THANAS
 
 # Optimization for gcc sdm845
+
+ifeq ($(cc-name),gcc)
 KBUILD_CFLAGS	+= -O3 -mtune=cortex-a75.cortex-a55 -ffast-math -mcpu=cortex-a75.cortex-a55+crc+crypto+fp16+simd+sve \
 -fomit-frame-pointer -pipe \
 -funroll-loops \
--fforce-addr -ftree-vectorize  
+-fforce-addr  \
 
+KBUILD_CFLAGS	+= -floop-parallelize-all -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -floop-optimize -floop-nest-optimize -fprefetch-loop-arrays -ftree-vectorize -ftree-loop-vectorize 
+endif
 
 #KBUILD_CFLAGS	+= -fno-gcse  
 #KBUILD_CFLAGS	+= -ftracer
 LDFLAGS		+= -O3 
-LDFLAGS += -fuse-ld=gold
-KBUILD_CFLAGS	+= $(call cc-option,-mabi=lp64)
-KBUILD_AFLAGS	+= $(call cc-option,-mabi=lp64)
+
+
 #LDFLAGS_vmlinux	+= $(call ld-option, --gc-sections,)
 #-fforce-addr -fopenmp -D_GLIBCXX_PARALLEL -ffunction-sections -fdata-sections -fvpt 
 #-fprofile-arcs -fauto-profile
@@ -863,15 +866,20 @@ KBUILD_CFLAGS	+= $(call cc-option, -mno-fix-cortex-a53-835769)
 KBUILD_CFLAGS	+= $(call cc-option, -mno-fix-cortex-a53-843419)
 
 
+KBUILD_CFLAGS	+= $(call cc-option,-mabi=lp64)
+KBUILD_AFLAGS	+= $(call cc-option,-mabi=lp64)
 
+
+
+
+
+
+ifeq ($(cc-name),clang)
 # Add Some optimization flags for clang
 KBUILD_CFLAGS	+= -O3 -march=armv8.3-a+crc+crypto+fp16+simd+sve -ffast-math -mcpu=cortex-a55+crc+crypto+fp16+simd+sve -mtune=cortex-a55 \
 -fomit-frame-pointer -pipe \
 -funroll-loops \
--fforce-addr \
-
-
-
+-fforce-addr -ftree-vectorize \
 
 #KBUILD_CFLAGS	+= -fopenmp 
 KBUILD_CFLAGS	+= -mllvm -polly \
@@ -894,6 +902,9 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   
 # Add EXP New Pass Manager for clang
 KBUILD_CFLAGS	+= -fexperimental-new-pass-manager
+endif
+		   
+
 LDFLAGS		+= -O3 
 
 
@@ -906,6 +917,7 @@ KBUILD_CFLAGS += $(call cc-ifversion, -lt, 0409, \
 ifdef CONFIG_CC_WERROR
 #KBUILD_CFLAGS	+= -Werror
 endif
+KBUILD_CFLAGS	+= -Wno-error
 
 # Add EXP New Pass Manager for clang
 KBUILD_CFLAGS	+= $(call cc-option,-fexperimental-new-pass-manager)
@@ -1069,7 +1081,7 @@ KBUILD_CFLAGS	+= $(call cc-option,-fno-merge-all-constants)
 
 # for gcc -fno-merge-all-constants disables everything, but it is fine
 # to have actual conforming behavior enabled.
-KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
+#KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
 
 # Make sure -fstack-check isn't enabled (like gentoo apparently did)
 KBUILD_CFLAGS  += $(call cc-option,-fno-stack-check,)

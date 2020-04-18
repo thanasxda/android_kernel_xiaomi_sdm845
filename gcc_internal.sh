@@ -23,11 +23,8 @@ MLX=~/GIT/android_kernel_xiaomi_sdm845
 AK=$MLX/AnyKernel3
 OUT=$MLX/out/arch/arm64/boot
 KERNEL=~/Desktop/MLX
-TC=/usr/
+TC=~/TOOLCHAIN
 ###
-GCC32=$TC/arm-linux-gnueabi/bin 
-GCC64=$TC/aarch64-linux-gnu/bin
-CLANG=/bin/
 ###
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )
@@ -47,8 +44,6 @@ VERSION=q
 KERNELINFO=${VERSION}_${DEVICE}_${HZ}_$(date +"%Y-%m-%d")
 KERNELNAME=malakas_kernel_$KERNELINFO.zip
 THREADS=-j$(nproc --all)
-FLAGS="AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip"
-CLANG_FLAGS="CC=clang"
 #VERBOSE="V=1"
 
 ###
@@ -58,8 +53,6 @@ export CROSS_COMPILE=aarch64-linux-gnu-
 export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
 #export CLANG_TRIPLE=aarch64-linux-gnu-
-export LD_LIBRARY_PATH="$CLANG/../lib:$CLANG/../lib64:$LD_LIBRARY_PATH"
-export PATH="$CLANG:$PATH"
 
 ###start compilation 
 mkdir -p out
