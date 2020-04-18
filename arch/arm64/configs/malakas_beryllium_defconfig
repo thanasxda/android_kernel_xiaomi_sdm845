@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 4.9.218 Kernel Configuration
+# Linux/arm64 4.9.219 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -1912,6 +1912,7 @@ CONFIG_HW_RANDOM_CAVIUM=y
 # CONFIG_XILLYBUS is not set
 CONFIG_MSM_ADSPRPC=y
 # CONFIG_MSM_RDBG is not set
+CONFIG_FRANDOM=y
 
 #
 # I2C support
