@@ -46,14 +46,15 @@ KERNELINFO=${VERSION}_${DEVICE}_${HZ}_$(date +"%Y-%m-%d")
 KERNELNAME=malakas_kernel_$KERNELINFO.zip
 THREADS=-j$(nproc --all)
 FLAGS="AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip"
+#LD="LD=ld.gold"
 CLANG_FLAGS="CC=clang"
 #VERBOSE="V=1"
 
 ###
 export ARCH=arm64 && export SUBARCH=arm64 $DEFCONFIG
 
-export CROSS_COMPILE=aarch64-linux-gnu-
-export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+export CROSS_COMPILE=$CLANG/aarch64-linux-gnu-
+export CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
 
 #export CLANG_TRIPLE=aarch64-linux-gnu-
 export LD_LIBRARY_PATH="$CLANG/../lib:$CLANG/../lib64:$LD_LIBRARY_PATH"
@@ -62,7 +63,7 @@ export PATH="$CLANG:$PATH"
 ###start compilation 
 mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG
-make O=out $THREADS $VERBOSE $CLANG_FLAGS $FLAGS 
+make O=out $THREADS $VERBOSE $CLANG_FLAGS $FLAGS $LD
 
 ###zip kernel
 if [ -e $OUT/Image.gz-dtb ]; then
