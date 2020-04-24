@@ -898,7 +898,8 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-vectorizer=stripmine \
 		   -mllvm -polly-opt-simplify-deps=no \
 		   -mllvm -polly-rtc-max-arrays-per-group=40 \
-		   -mllvm -polly-invariant-load-hoisting
+		   -mllvm -polly-invariant-load-hoisting \
+		   -mllvm -polly-vectorizer=polly
 		   
 # Add EXP New Pass Manager for clang
 KBUILD_CFLAGS	+= -fexperimental-new-pass-manager
