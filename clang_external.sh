@@ -25,7 +25,7 @@ OUT=$MLX/out/arch/arm64/boot
 KERNEL=~/Desktop/MLX
 TC=~/TOOLCHAIN
 ###
-CLANG=$TC/clang/bin/
+CLANG=$TC/clang/bin
 ###
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )
