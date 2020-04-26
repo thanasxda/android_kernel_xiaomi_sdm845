@@ -4,6 +4,7 @@ AK=$MLX/AnyKernel3
 AIK=$MLX/AIK
 TC=~/TOOLCHAIN
 cd $MLX
+git pull
 rm -rf $AK
 git clone https://github.com/thanasxda/AnyKernel3.git
 rm -rf $AIK

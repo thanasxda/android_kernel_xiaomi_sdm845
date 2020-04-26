@@ -121,3 +121,5 @@ kernel/configs/android-*.cfg
 
 # Ignore compiled objects
 obj
+
+BOT.sh

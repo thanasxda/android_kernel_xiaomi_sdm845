@@ -1,8 +1,14 @@
 #!/bin/bash 
 ### MLX COMPILATION SCRIPT
+###setup bot
+CHATID=#################################################
+BOTAPIKEY=##############################################
+###ping channel
+ curl -F chat_id="$CHATID" -F text="Build started bitches" -F document=@"$KERNEL/$KERNELNAME" https://api.telegram.org/bot$BOTAPIKEY/sendMessage
 ###escalate privileges needed to zip recovery
 MLX=~/GIT/android_kernel_xiaomi_sdm845
 sudo cd $MLX
+cd $MLX && git pull
 ###
 DATE_START=$(date +"%s")
 yellow="\033[1;93m" 
@@ -19,8 +25,9 @@ export PREBUILT_CACHE_DIR=~/.ccache
 export CCACHE_DIR=~/.ccache
 ccache -M 30G
 
-export KBUILD_BUILD_USER=thanas
-export KBUILD_BUILD_HOST=MLX
+###leave disabled to show current developer
+#export KBUILD_BUILD_USER=thanas
+#export KBUILD_BUILD_HOST=MLX
 
 ###setup dirs
 AK=$MLX/AnyKernel3
@@ -30,13 +37,11 @@ OUT=$MLX/out/arch/arm64/boot
 KERNEL=~/Desktop/MLX
 TC=~/TOOLCHAIN
 CLANG=$TC/clang/bin
+COMPILE=$(cat "$KERNEL/.compile/compile.h")
 cd $AK && git pull
 cd $AIK && git pull 
 cd $CLANG/.. && git pull 
 cd $MLX
-###setup bot
-CHATID= #hidethisshit
-BOTAPIKEY= #hidethisshit
 ###setup kernel stuff
 DEFCONFIG=malakas_beryllium_defconfig
 HZ=69-65hz
@@ -163,16 +168,20 @@ echo -e "${restore}"
 
 ###insert second kernel in prebuilt recovery
 cd $AIK
+./unpackimg.sh recovery.img
+rm -rf $AIK/split_img/recovery.img-zImage
 mv $OUT/Image.gz-dtb $AIK/split_img/recovery.img-zImage
 ./repackimg.sh
 mv image-new.img recovery.img
 zip -g $RECOVERYNAME recovery.img
 rm -rf $AIK/split_img/recovery.img-zImage
+./cleanup.sh
 cp $RECOVERYNAME $KERNEL
 
 ###push recovery
 cd $KERNEL
 curl -F chat_id="$CHATID" -F document=@"$KERNEL/$RECOVERYNAME" https://api.telegram.org/bot$BOTAPIKEY/sendDocument
+curl -F chat_id="$CHATID" -F text="$COMPILE"  https://api.telegram.org/bot$BOTAPIKEY/sendMessage
 
 echo -e "${magenta}"
 echo "RECOVERY PUSHED ON TELEGRAM. ALL DONE K THX"
