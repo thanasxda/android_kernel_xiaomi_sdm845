@@ -1,5 +1,5 @@
 #!/bin/bash
-MLX=~/GIT/android_kernel_xiaomi_sdm845
+MLX="$(pwd)"
 AK=$MLX/AnyKernel3
 AIK=$MLX/AIK
 TC=~/TOOLCHAIN

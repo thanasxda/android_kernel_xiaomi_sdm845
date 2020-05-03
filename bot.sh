@@ -6,7 +6,7 @@ BOTAPIKEY=##############################################
 ###ping channel
  curl -F chat_id="$CHATID" -F text="Build started bitches" -F document=@"$KERNEL/$KERNELNAME" https://api.telegram.org/bot$BOTAPIKEY/sendMessage
 ###escalate privileges needed to zip recovery
-MLX=~/GIT/android_kernel_xiaomi_sdm845
+MLX="$(pwd)"
 sudo cd $MLX
 cd $MLX && git pull
 ###
