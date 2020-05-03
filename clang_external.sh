@@ -59,7 +59,8 @@ export CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
 #export CLANG_TRIPLE=aarch64-linux-gnu-
 export LD_LIBRARY_PATH="$CLANG/../lib:$CLANG/../lib64:$LD_LIBRARY_PATH"
 export PATH="$CLANG:$PATH"
-
+#make menuconfig 
+#cp .config arch/arm64/configs/malakas_beryllium_defconfig
 ###start compilation 
 mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG
