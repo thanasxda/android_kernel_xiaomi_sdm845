@@ -19,7 +19,7 @@ export KBUILD_BUILD_USER=thanas
 export KBUILD_BUILD_HOST=MLX
 
 ###setup
-MLX=~/GIT/android_kernel_xiaomi_sdm845
+MLX="$(pwd)"
 AK=$MLX/AnyKernel3
 OUT=$MLX/out/arch/arm64/boot
 KERNEL=~/Desktop/MLX
@@ -27,6 +27,10 @@ TC=~/TOOLCHAIN
 ###
 CLANG=$TC/clang/bin
 ###
+
+### update clang
+cd $TC/clang && git pull && cd $MLX
+##
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )
 if [ $checkhz -eq -1 ]; then

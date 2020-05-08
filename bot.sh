@@ -59,6 +59,11 @@ CLANG_FLAGS="CC=clang"
 #VERBOSE="V=1"
 ###set HZ
 sed -i '68s/.*/					qcom,mdss-dsi-panel-framerate = < 0x45 >;/' $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi
+### update compilers prior to compilation
+sudo apt -f upgrade -y clang-11 
+sudo apt -f upgrade -y gcc-10
+sudo apt -f upgrade -y gcc clang binutils make flex bison bc build-essential libncurses-dev  libssl-dev libelf-dev qt5-default
+cd $TC/clang && git pull && cd MLX
 ###
 export ARCH=arm64 && export SUBARCH=arm64 $DEFCONFIG
 
