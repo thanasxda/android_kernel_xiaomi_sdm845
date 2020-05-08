@@ -29,7 +29,7 @@ CLANG=$TC/clang/bin
 ###
 
 ### update clang
-cd $TC/clang && git pull && cd $MLX
+#cd $TC/clang && git pull && cd $MLX
 ##
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )

@@ -881,7 +881,7 @@ KBUILD_CFLAGS	+= -O3 -march=armv8.3-a+crc+crypto+fp16+simd+sve -ffast-math -mcpu
 -funroll-loops \
 -fforce-addr -ftree-vectorize \
 
-#KBUILD_CFLAGS	+= -fopenmp 
+KBUILD_CFLAGS	+= -fopenmp 
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-omp-backend=LLVM \
 		   -mllvm -polly-scheduling=dynamic \
@@ -903,12 +903,24 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   
 # Add EXP New Pass Manager for clang
 KBUILD_CFLAGS	+= -fexperimental-new-pass-manager
-endif
-		   
+#endif
+
+#### too lazy to remove doubles... 
+KBUILD_CFLAGS	+= --param=ssp-buffer-size=32 -D_FORTIFY_SOURCE=2 -D_REENTRANT -fassociative-math -fasynchronous-unwind-tables -feliminate-unused-debug-types -fexceptions -fno-semantic-interposition -fno-signed-zeros \
+-fno-strict-aliasing \
+-fno-trapping-math \
+-pthread -Wall \
+-Wformat-security \
+-g -fno-stack-protector \
+-fwrapv       
+
+	
+
+
 
 LDFLAGS		+= -O3 
-
-
+#####
+endif
 
 
 
