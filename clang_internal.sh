@@ -1,13 +1,13 @@
 #!/bin/bash
 ### MLX COMPILATION SCRIPT
 DATE_START=$(date +"%s")
-yellow="\033[1;93m" 
+yellow="\033[1;93m"
 magenta="\033[05;1;95m"
 restore="\033[0m"
 echo -e "${magenta}"
 echo ΜΑΛΆΚΑΣ KERNEL
 echo -e "${yellow}"
-make kernelversion 
+make kernelversion
 echo -e "${restore}"
 export USE_CCACHE=1
 export USE_PREBUILT_CACHE=1
@@ -15,8 +15,8 @@ export PREBUILT_CACHE_DIR=~/.ccache
 export CCACHE_DIR=~/.ccache
 ccache -M 30G
 
-export KBUILD_BUILD_USER=thanas
-export KBUILD_BUILD_HOST=MLX
+#export KBUILD_BUILD_USER=thanas
+#export KBUILD_BUILD_HOST=MLX
 
 ###setup
 MLX="$(pwd)"
@@ -25,6 +25,15 @@ OUT=$MLX/out/arch/arm64/boot
 KERNEL=~/Desktop/MLX
 ###
 
+###
+sudo apt update
+sudo apt -f upgrade -y clang-11 lld-11
+sudo apt -f upgrade -y clang-10 lld-10
+sudo apt -f upgrade -y gcc-10
+sudo apt -f upgrade -y gcc-10-aarch64-linux-gnu gcc-10-arm-linux-gnueabi
+sudo apt -f upgrade -y gcc-aarch64-linus-gnu gcc-arm-linux-gnueabi
+sudo apt -f upgrade -y gcc clang binutils make flex bison bc build-essential libncurses-dev libssl-dev libelf-dev qt5-default
+sudo apt -f install -y && sudo apt -f --fix-missing install -y
 ###
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )
@@ -56,10 +65,10 @@ export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
 #export CLANG_TRIPLE=aarch64-linux-gnu-
 
-###start compilation 
+###start compilation
 mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG
-make O=out $THREADS $VERBOSE $CLANG_FLAGS $FLAGS 
+make O=out $THREADS $VERBOSE $CLANG_FLAGS $FLAGS
 
 ###zip kernel
 if [ -e $OUT/Image.gz-dtb ]; then
@@ -110,9 +119,7 @@ fi;
 function clean_all {
 if [ -e $MLX/out ]; then
 cd $MLX
-rm -rf out
-make O=out clean
-make mrproper
+./clean.sh
 fi;
 }
 while read -p "Clean stuff (y/n)? " cchoice
@@ -139,7 +146,5 @@ cd $MLX
 echo -e "${yellow}"
 echo overriding option, force clean due to build success
 echo -e "${restore}"
-rm -rf out
-make O=out clean
-make mrproper
+./clean.sh
 fi;

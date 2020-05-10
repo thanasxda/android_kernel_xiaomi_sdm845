@@ -1,13 +1,13 @@
 #!/bin/bash
 ### MLX COMPILATION SCRIPT
 DATE_START=$(date +"%s")
-yellow="\033[1;93m" 
+yellow="\033[1;93m"
 magenta="\033[05;1;95m"
 restore="\033[0m"
 echo -e "${magenta}"
 echo ΜΑΛΆΚΑΣ KERNEL
 echo -e "${yellow}"
-make kernelversion 
+make kernelversion
 echo -e "${restore}"
 export USE_CCACHE=1
 export USE_PREBUILT_CACHE=1
@@ -15,8 +15,8 @@ export PREBUILT_CACHE_DIR=~/.ccache
 export CCACHE_DIR=~/.ccache
 ccache -M 30G
 
-export KBUILD_BUILD_USER=thanas
-export KBUILD_BUILD_HOST=MLX
+#export KBUILD_BUILD_USER=thanas
+#export KBUILD_BUILD_HOST=MLX
 
 ###setup
 MLX="$(pwd)"
@@ -29,7 +29,7 @@ CLANG=$TC/clang/bin
 ###
 
 ### update clang
-#cd $TC/clang && git pull && cd $MLX
+cd $CLANG/.. && git pull && cd $MLX
 ##
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )
@@ -63,9 +63,9 @@ export CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
 #export CLANG_TRIPLE=aarch64-linux-gnu-
 export LD_LIBRARY_PATH="$CLANG/../lib:$CLANG/../lib64:$LD_LIBRARY_PATH"
 export PATH="$CLANG:$PATH"
-#make menuconfig 
+#make menuconfig
 #cp .config arch/arm64/configs/malakas_beryllium_defconfig
-###start compilation 
+###start compilation
 mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG
 make O=out $THREADS $VERBOSE $CLANG_FLAGS $FLAGS $LD
@@ -119,9 +119,7 @@ fi;
 function clean_all {
 if [ -e $MLX/out ]; then
 cd $MLX
-rm -rf out
-make O=out clean
-make mrproper
+./clean.sh
 fi;
 }
 while read -p "Clean stuff (y/n)? " cchoice
@@ -148,7 +146,5 @@ cd $MLX
 echo -e "${yellow}"
 echo overriding option, force clean due to build success
 echo -e "${restore}"
-rm -rf out
-make O=out clean
-make mrproper
+./clean.sh
 fi;

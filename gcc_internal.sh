@@ -1,13 +1,13 @@
 #!/bin/bash
 ### MLX COMPILATION SCRIPT
 DATE_START=$(date +"%s")
-yellow="\033[1;93m" 
+yellow="\033[1;93m"
 magenta="\033[05;1;95m"
 restore="\033[0m"
 echo -e "${magenta}"
 echo ΜΑΛΆΚΑΣ KERNEL
 echo -e "${yellow}"
-make kernelversion 
+make kernelversion
 echo -e "${restore}"
 export USE_CCACHE=1
 export USE_PREBUILT_CACHE=1
@@ -15,8 +15,8 @@ export PREBUILT_CACHE_DIR=~/.ccache
 export CCACHE_DIR=~/.ccache
 ccache -M 30G
 
-export KBUILD_BUILD_USER=thanas
-export KBUILD_BUILD_HOST=MLX
+#export KBUILD_BUILD_USER=thanas
+#export KBUILD_BUILD_HOST=MLX
 
 ###setup
 MLX="$(pwd)"
@@ -39,6 +39,7 @@ echo -e "${yellow}"
 echo you are building with refreshrate overdrive
 echo -e "${restore}"
 fi;
+sudo apt update && sudo apt -f upgrade -y gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
 DEVICE=beryllium
 VERSION=q
 KERNELINFO=${VERSION}_${DEVICE}_${HZ}_$(date +"%Y-%m-%d")
@@ -54,10 +55,10 @@ export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
 #export CLANG_TRIPLE=aarch64-linux-gnu-
 
-###start compilation 
+###start compilation
 mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG
-make O=out $THREADS $VERBOSE $CLANG_FLAGS $FLAGS 
+make O=out $THREADS $VERBOSE $CLANG_FLAGS $FLAGS
 
 ###zip kernel
 if [ -e $OUT/Image.gz-dtb ]; then
@@ -108,9 +109,7 @@ fi;
 function clean_all {
 if [ -e $MLX/out ]; then
 cd $MLX
-rm -rf out
-make O=out clean
-make mrproper
+./clean.sh
 fi;
 }
 while read -p "Clean stuff (y/n)? " cchoice
@@ -137,7 +136,5 @@ cd $MLX
 echo -e "${yellow}"
 echo overriding option, force clean due to build success
 echo -e "${restore}"
-rm -rf out
-make O=out clean
-make mrproper
+./clean.sh
 fi;

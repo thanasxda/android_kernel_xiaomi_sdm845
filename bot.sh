@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 ### MLX COMPILATION SCRIPT
 ###setup bot
 CHATID=#################################################
@@ -11,13 +11,13 @@ sudo cd $MLX
 cd $MLX && git pull
 ###
 DATE_START=$(date +"%s")
-yellow="\033[1;93m" 
+yellow="\033[1;93m"
 magenta="\033[05;1;95m"
 restore="\033[0m"
 echo -e "${magenta}"
 echo ΜΑΛΆΚΑΣ KERNEL
 echo -e "${yellow}"
-make kernelversion 
+make kernelversion
 echo -e "${restore}"
 export USE_CCACHE=1
 export USE_PREBUILT_CACHE=1
@@ -39,8 +39,8 @@ TC=~/TOOLCHAIN
 CLANG=$TC/clang/bin
 COMPILE=$(cat "$KERNEL/.compile/compile.h")
 cd $AK && git pull
-cd $AIK && git pull 
-cd $CLANG/.. && git pull 
+cd $AIK && git pull
+cd $CLANG/.. && git pull
 cd $MLX
 ###setup kernel stuff
 DEFCONFIG=malakas_beryllium_defconfig
@@ -60,7 +60,8 @@ CLANG_FLAGS="CC=clang"
 ###set HZ
 sed -i '68s/.*/					qcom,mdss-dsi-panel-framerate = < 0x45 >;/' $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi
 ### update compilers prior to compilation
-sudo apt -f upgrade -y clang-11 
+sudo apt -f upgrade -y clang-11 lld-11
+sudo apt -f upgrade -y clang-10 lld-10
 sudo apt -f upgrade -y gcc-10
 sudo apt -f upgrade -y gcc clang binutils make flex bison bc build-essential libncurses-dev  libssl-dev libelf-dev qt5-default
 cd $TC/clang && git pull && cd MLX
@@ -74,7 +75,7 @@ export CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
 export LD_LIBRARY_PATH="$CLANG/../lib:$CLANG/../lib64:$LD_LIBRARY_PATH"
 export PATH="$CLANG:$PATH"
 
-###start compilation 
+###start compilation
 mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG
 make O=out $THREADS $VERBOSE $CLANG_FLAGS $FLAGS $LD
@@ -133,7 +134,7 @@ export CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
 export LD_LIBRARY_PATH="$CLANG/../lib:$CLANG/../lib64:$LD_LIBRARY_PATH"
 export PATH="$CLANG:$PATH"
 
-###start compilation 
+###start compilation
 mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG
 make O=out $THREADS $VERBOSE $CLANG_FLAGS $FLAGS $LD
