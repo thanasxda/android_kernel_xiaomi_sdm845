@@ -842,19 +842,19 @@ KBUILD_CFLAGS	+= -O3 -mtune=cortex-a75.cortex-a55 -ffast-math -mcpu=cortex-a75.c
 -funroll-loops \
 -fforce-addr  \
 
-KBUILD_CFLAGS	+= -floop-parallelize-all -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -floop-optimize -floop-nest-optimize -fprefetch-loop-arrays -ftree-vectorize -ftree-loop-vectorize 
+KBUILD_CFLAGS	+= -floop-parallelize-all -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -floop-optimize -floop-nest-optimize -fprefetch-loop-arrays -ftree-vectorize -ftree-loop-vectorize
 endif
 
-#KBUILD_CFLAGS	+= -fno-gcse  
+#KBUILD_CFLAGS	+= -fno-gcse
 #KBUILD_CFLAGS	+= -ftracer
-LDFLAGS		+= -O3 
+LDFLAGS		+= -O3
 
 
 #LDFLAGS_vmlinux	+= $(call ld-option, --gc-sections,)
-#-fforce-addr -fopenmp -D_GLIBCXX_PARALLEL -ffunction-sections -fdata-sections -fvpt 
+#-fforce-addr -fopenmp -D_GLIBCXX_PARALLEL -ffunction-sections -fdata-sections -fvpt
 #-fprofile-arcs -fauto-profile
 #-fprofile-generate -fprofile-dir=~/TOOLCHAIN/PGO
-#-fprofile-use=~/TOOLCHAIN/PGO -fprofile-correction 
+#-fprofile-use=~/TOOLCHAIN/PGO -fprofile-correction
 
 #KBUILD_CFLAGS += -Wno-undefined-optimized
 #LDFLAGS	+= -fuse-linker-plugin
@@ -881,7 +881,7 @@ KBUILD_CFLAGS	+= -O3 -march=armv8.3-a+crc+crypto+fp16+simd+sve -ffast-math -mcpu
 -funroll-loops \
 -fforce-addr -ftree-vectorize \
 
-KBUILD_CFLAGS	+= -fopenmp 
+KBUILD_CFLAGS	+= -fopenmp
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-omp-backend=LLVM \
 		   -mllvm -polly-scheduling=dynamic \
@@ -900,25 +900,28 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-rtc-max-arrays-per-group=40 \
 		   -mllvm -polly-invariant-load-hoisting \
 		   -mllvm -polly-vectorizer=polly
-		   
+
 # Add EXP New Pass Manager for clang
 KBUILD_CFLAGS	+= -fexperimental-new-pass-manager
 #endif
 
-#### too lazy to remove doubles... 
-KBUILD_CFLAGS	+= --param=ssp-buffer-size=32 -D_FORTIFY_SOURCE=2 -D_REENTRANT -fassociative-math -fasynchronous-unwind-tables -feliminate-unused-debug-types -fexceptions -fno-semantic-interposition -fno-signed-zeros \
+#### too lazy to remove doubles...
+KBUILD_CFLAGS	+= -fassociative-math -fasynchronous-unwind-tables -feliminate-unused-debug-types -fexceptions -fno-semantic-interposition -fno-signed-zeros \
 -fno-strict-aliasing \
 -fno-trapping-math \
--pthread -Wall \
+-fno-stack-protector
+
+#-pthread -Wall \
 -Wformat-security \
--g -fno-stack-protector \
--fwrapv       
-
-	
-
+-g  \
+-fwrapv \
+--param=ssp-buffer-size=32 -D_FORTIFY_SOURCE=2 -D_REENTRANT
 
 
-LDFLAGS		+= -O3 
+
+
+
+LDFLAGS		+= -O3
 #####
 endif
 
