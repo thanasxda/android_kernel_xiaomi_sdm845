@@ -18,6 +18,8 @@ ccache -M 30G
 #export KBUILD_BUILD_USER=thanas
 #export KBUILD_BUILD_HOST=MLX
 
+### update stuff
+./UPDATE*
 ###setup
 MLX="$(pwd)"
 AK=$MLX/AnyKernel3

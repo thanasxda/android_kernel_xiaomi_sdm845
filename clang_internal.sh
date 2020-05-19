@@ -25,15 +25,8 @@ OUT=$MLX/out/arch/arm64/boot
 KERNEL=~/Desktop/MLX
 ###
 
-###
-sudo apt update
-sudo apt -f upgrade -y clang-11 lld-11
-sudo apt -f upgrade -y clang-10 lld-10
-sudo apt -f upgrade -y gcc-10
-sudo apt -f upgrade -y gcc-10-aarch64-linux-gnu gcc-10-arm-linux-gnueabi
-sudo apt -f upgrade -y gcc-aarch64-linus-gnu gcc-arm-linux-gnueabi
-sudo apt -f upgrade -y gcc clang binutils make flex bison bc build-essential libncurses-dev libssl-dev libelf-dev qt5-default
-sudo apt -f install -y && sudo apt -f --fix-missing install -y
+### update stuff
+./UPDATE*
 ###
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )
