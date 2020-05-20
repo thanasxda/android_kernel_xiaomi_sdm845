@@ -46,8 +46,8 @@ VERSION=q
 KERNELINFO=${VERSION}_${DEVICE}_${HZ}_$(date +"%Y-%m-%d")
 KERNELNAME=malakas_kernel_$KERNELINFO.zip
 THREADS=-j$(nproc --all)
-FLAGS="AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip"
-CLANG_FLAGS="CC=clang"
+FLAGS="AR=llvm-ar-10 NM=llvm-nm-10 OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip"
+CLANG_FLAGS="CC=clang-10"
 #VERBOSE="V=1"
 
 ###
