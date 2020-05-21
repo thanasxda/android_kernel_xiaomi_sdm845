@@ -881,7 +881,7 @@ KBUILD_AFLAGS	+= $(call cc-option,-mabi=lp64)
 
 ifeq ($(cc-name),clang)
 # Add Some optimization flags for clang
-KBUILD_CFLAGS	+= -O3 -march=armv8.3-a+crc+crypto+fp16+simd+sve -ffast-math -mcpu=cortex-a55+crc+crypto+fp16+simd+sve -mtune=cortex-a55 \
+KBUILD_CFLAGS	+= -O3 -march=armv8.3-a+crc+crypto+fp16+simd+sve -ffast-math -mcpu=cortex-a55+crc+crypto+fp16+simd+sve -mtune=cortex-a55+crc+crypto+fp16+simd+sve \
 -fomit-frame-pointer -pipe \
 -funroll-loops \
 -fforce-addr -ftree-vectorize \
@@ -914,13 +914,12 @@ KBUILD_CFLAGS	+= -fexperimental-new-pass-manager
 KBUILD_CFLAGS	+= -fassociative-math -fasynchronous-unwind-tables -feliminate-unused-debug-types -fexceptions -fno-semantic-interposition -fno-signed-zeros -D_FORTIFY_SOURCE=2 \
 -fno-strict-aliasing \
 -fno-trapping-math \
--fno-stack-protector
+-fno-stack-protector -pthread -Wall -Wformat-security -fwrapv --param=ssp-buffer-size=32 \
+-D_REENTRANT
 
-#-pthread -Wall \
--Wformat-security \
--g  \
--fwrapv \
---param=ssp-buffer-size=32 -D_FORTIFY_SOURCE=2 -D_REENTRANT
+#-g
+
+#
 
 
 
