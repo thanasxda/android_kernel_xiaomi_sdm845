@@ -911,7 +911,7 @@ KBUILD_CFLAGS	+= -fexperimental-new-pass-manager
 #endif
 
 #### too lazy to remove doubles...
-KBUILD_CFLAGS	+= -fassociative-math -fasynchronous-unwind-tables -feliminate-unused-debug-types -fexceptions -fno-semantic-interposition -fno-signed-zeros \
+KBUILD_CFLAGS	+= -fassociative-math -fasynchronous-unwind-tables -feliminate-unused-debug-types -fexceptions -fno-semantic-interposition -fno-signed-zeros -D_FORTIFY_SOURCE=2 \
 -fno-strict-aliasing \
 -fno-trapping-math \
 -fno-stack-protector
