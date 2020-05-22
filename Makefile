@@ -904,7 +904,13 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-opt-simplify-deps=no \
 		   -mllvm -polly-rtc-max-arrays-per-group=40 \
 		   -mllvm -polly-invariant-load-hoisting \
-		   -mllvm -polly-vectorizer=polly
+		   -mllvm -polly-vectorizer=polly \
+		   -mllvm -polly-parallel \
+		   -mllvm -polly-parallel-force \
+			 -mllvm -polly-ast-detect-parallel
+
+
+			 #-mllvm -polly-no-early-exit
 
 # Add EXP New Pass Manager for clang
 KBUILD_CFLAGS	+= -fexperimental-new-pass-manager
