@@ -39,15 +39,15 @@ echo -e "${yellow}"
 echo you are building stock
 echo -e "${restore}"
 else
-HZ=69-65hz
+HZ=69-60hz
 echo -e "${yellow}"
 echo you are building with refreshrate overdrive
 echo -e "${restore}"
 fi;
 DEVICE=beryllium
-VERSION=q
+VERSION=v2
 KERNELINFO=${VERSION}_${DEVICE}_${HZ}_$(date +"%Y-%m-%d")
-KERNELNAME=malakas_kernel_$KERNELINFO.zip
+KERNELNAME=mlx_kernel_$KERNELINFO.zip
 THREADS=-j$(nproc --all)
 FLAGS="AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip"
 #LD="LD=ld.gold"

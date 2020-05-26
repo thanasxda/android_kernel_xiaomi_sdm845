@@ -44,14 +44,14 @@ cd $CLANG/.. && git pull
 cd $MLX
 ###setup kernel stuff
 DEFCONFIG=malakas_beryllium_defconfig
-HZ=69-65hz
-HZ2=67-65hz
+HZ=69-60hz
+HZ2=67-60hz
 DEVICE=beryllium
-VERSION=q
+VERSION=v2
 KERNELINFO=${VERSION}_${DEVICE}_${HZ}_$(date +"%Y-%m-%d")
 KERNELINFO2=${VERSION}_${DEVICE}_${HZ2}_$(date +"%Y-%m-%d")
-KERNELNAME=malakas_kernel_$KERNELINFO.zip
-KERNELNAME2=malakas_kernel_$KERNELINFO2.zip
+KERNELNAME=mlx_kernel_$KERNELINFO.zip
+KERNELNAME2=mlx_kernel_$KERNELINFO2.zip
 THREADS=-j$(nproc --all)
 FLAGS="AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip"
 #LD="LD=ld.gold"
