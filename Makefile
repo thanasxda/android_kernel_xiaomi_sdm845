@@ -309,9 +309,9 @@ HOSTCFLAGS      := -Wall -Wmissing-prototypes -Wstrict-prototypes -fomit-frame-p
 
 HOSTCXXFLAGS = -O3 -Wall -O3 -ffast-math
 HOSTLDFLAGS  := -O3 -fuse-ld=lld
-subdir-ccflags-y := O3 -march=armv8.3-a+crc+crypto+fp16+simd+sve -ffast-math -mcpu=cortex-a55+crc+crypto+fp16+simd+sve -mtune=cortex-a55 -ffast-math -pipe -fPIE -march=native -mtune=native \
+subdir-ccflags-y := O3 -march=armv8.3-a+crc+crypto+fp16+simd+sve -ffast-math -mcpu=cortex-a55+crc+crypto+fp16+simd+sve -mtune=cortex-a55+crc+crypto+fp16+simd+sve -ffast-math -pipe -fPIE \
 --param=ssp-buffer-size=32 -D_FORTIFY_SOURCE=2 -D_REENTRANT -fassociative-math -fasynchronous-unwind-tables -feliminate-unused-debug-types -Wformat-security -fno-semantic-interposition \
--fno-signed-zeros -fno-strict-aliasing -fno-trapping-math -m64 -pthread -Wformat-security -fno-stack-protector -fwrapv -funroll-loops -ftree-vectorize -fforce-addr
+-fno-signed-zeros -fno-strict-aliasing -fno-trapping-math -m64 -pthread -Wformat-security -fno-stack-protector -fwrapv -funroll-loops -ftree-vectorize -fforce-addr -mfloat-abi=hard -mfpu=crypto-neon-fp-armv8
 
 ifeq ($(shell $(HOSTCC) -v 2>&1 | grep -c "clang version"), 1)
 HOSTCFLAGS  += -Wno-unused-value -Wno-unused-parameter \
@@ -885,6 +885,7 @@ KBUILD_CFLAGS	+= -O3 -march=armv8.3-a+crc+crypto+fp16+simd+sve -ffast-math -mcpu
 -fomit-frame-pointer -pipe \
 -funroll-loops \
 -fforce-addr -ftree-vectorize \
+-mfloat-abi=hard -mfpu=crypto-neon-fp-armv8
 
 KBUILD_CFLAGS	+= -fopenmp
 KBUILD_CFLAGS	+= -mllvm -polly \
