@@ -29,7 +29,7 @@ CLANG=$TC/clang/bin
 ###
 
 ### update stuff
-#./UPDATE*
+./5_UPDATE*
 ##
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )
@@ -119,7 +119,7 @@ fi;
 function clean_all {
 if [ -e $MLX/out ]; then
 cd $MLX
-./clean.sh
+./3_clean.sh
 fi;
 }
 while read -p "Clean stuff (y/n)? " cchoice
@@ -146,5 +146,5 @@ cd $MLX
 echo -e "${yellow}"
 echo overriding option, force clean due to build success
 echo -e "${restore}"
-./clean.sh
+./3_clean.sh
 fi;

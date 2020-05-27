@@ -16,4 +16,4 @@ git clone https://github.com/TwistedPrime/twisted-clang.git
 mv twisted-clang clang
 cd $MLX
 ### update stuff
-./UPDATE*
+./5_UPDATE*
