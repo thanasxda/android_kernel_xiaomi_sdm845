@@ -29,7 +29,7 @@ CLANG=$TC/clang/bin
 ###
 
 ### update stuff
-./6_UPDATE*
+#./6_UPDATE*
 ##
 DEFCONFIG=malakas_beryllium_defconfig
 checkhz=$( grep -ic "framerate = < 0x3C >" $MLX/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi )
@@ -53,7 +53,7 @@ FLAGS="AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llv
 #LD="LD=ld.gold"
 CLANG_FLAGS="CC=clang"
 #VERBOSE="V=1"
-
+#cd $CLANG/.. && git pull && cd $MLX
 ###
 export ARCH=arm64 && export SUBARCH=arm64 $DEFCONFIG
 
