@@ -32,7 +32,7 @@ ccache -M 30G
 ###setup dirs
 AK=$MLX/AnyKernel3
 AIK=$MLX/AIK
-RECOVERYNAME=OrangeFox-v10-1-MLX-67-65hz-Unofficial-beryllium.zip
+RECOVERYNAME=OrangeFox-v10-1-MLX-67-60hz-Unofficial-beryllium.zip
 OUT=$MLX/out/arch/arm64/boot
 KERNEL=~/Desktop/MLX
 TC=~/TOOLCHAIN
