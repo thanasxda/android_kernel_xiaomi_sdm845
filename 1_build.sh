@@ -26,8 +26,9 @@ MLX="$(pwd)"
 AK=$MLX/AnyKernel3
 OUT=$MLX/out/arch/arm64/boot
 KERNEL=~/Desktop/MLX
-TC=~/TOOLCHAIN
+#TC=~/TOOLCHAIN
 ###
+#unhash for external tc
 #CLANG=$TC/clang/bin
 ###
 
@@ -64,8 +65,8 @@ export CROSS_COMPILE=aarch64-linux-gnu-
 export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
 #export CLANG_TRIPLE=aarch64-linux-gnu-
-export LD_LIBRARY_PATH="$CLANG/../lib:$CLANG/../lib64:$LD_LIBRARY_PATH"
-export PATH="$CLANG:$PATH"
+#export LD_LIBRARY_PATH="$CLANG/../lib:$CLANG/../lib64:$LD_LIBRARY_PATH"
+#export PATH="$CLANG:$PATH"
 #make menuconfig
 #cp .config arch/arm64/configs/malakas_beryllium_defconfig
 ###start compilation
